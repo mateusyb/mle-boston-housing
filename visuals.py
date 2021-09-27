@@ -24,10 +24,13 @@ def ModelLearning(X, y):
     cv = ShuffleSplit(n_splits = 10, test_size = 0.2, random_state = 0)
 
     # Generate the training set sizes increasing by 50
-    train_sizes = np.rint(np.linspace(1, X.shape[0]*0.8 - 1, 9)).astype(int)
+    # Training size = 1 causes warning from R2 score function
+    train_sizes = np.rint(np.linspace(2, X.shape[0]*0.8 - 1, 9)).astype(int)
 
     # Create the figure window
-    fig = pl.figure(figsize=(10,7))
+    fig, ax = pl.subplots(2, 2, figsize=(10,7))
+    # ax is a 2x2 array. It should be flattened in order to be used in the loop below
+    ax = ax.flatten()
 
     # Create three different models based on max_depth
     for k, depth in enumerate([1,3,6,10]):
@@ -46,26 +49,25 @@ def ModelLearning(X, y):
         test_mean = np.mean(test_scores, axis = 1)
 
         # Subplot the learning curve
-        ax = fig.add_subplot(2, 2, k+1)
-        ax.plot(sizes, train_mean, 'o-', color = 'r', label = 'Training Score')
-        ax.plot(sizes, test_mean, 'o-', color = 'g', label = 'Testing Score')
-        ax.fill_between(sizes, train_mean - train_std, \
+        ax[k].plot(sizes, train_mean, 'o-', color = 'r', label = 'Training Score')
+        ax[k].plot(sizes, test_mean, 'o-', color = 'g', label = 'Testing Score')
+        ax[k].fill_between(sizes, train_mean - train_std, \
             train_mean + train_std, alpha = 0.15, color = 'r')
-        ax.fill_between(sizes, test_mean - test_std, \
+        ax[k].fill_between(sizes, test_mean - test_std, \
             test_mean + test_std, alpha = 0.15, color = 'g')
 
         # Labels
-        ax.set_title('max_depth = %s'%(depth))
-        ax.set_xlabel('Number of Training Points')
-        ax.set_ylabel('Score')
-        ax.set_xlim([0, X.shape[0]*0.8])
-        ax.set_ylim([-0.05, 1.05])
+        ax[k].set_title('max_depth = %s'%(depth))
+        ax[k].set_xlabel('Number of Training Points')
+        ax[k].set_ylabel('Score')
+        ax[k].set_xlim([0, X.shape[0]*0.8])
+        ax[k].set_ylim([-0.05, 1.05])
 
     # Visual aesthetics
-    ax.legend(bbox_to_anchor=(1.05, 2.05), loc='lower left', borderaxespad = 0.)
+    ax[1].legend(bbox_to_anchor=(1.05, 0.9), loc='lower left', borderaxespad = 0.)
     fig.suptitle('Decision Tree Regressor Learning Performances', fontsize = 16, y = 1.03)
     fig.tight_layout()
-    fig.show()
+    #fig.show() # will cause a warning since we are using Jupyter's inline backend
 
 
 def ModelComplexity(X, y):
