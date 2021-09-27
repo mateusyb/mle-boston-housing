@@ -2,6 +2,8 @@
 # Model Evaluation and Validation
 ## Project: Predicting Boston Housing Prices
 
+This project was completed as part of [Udacity](https://www.udacity.com/)'s Machine Learning Engineer Nanodegree Program. The original files are in the [udacity/machine-learning](https://github.com/udacity/machine-learning/tree/master/projects/boston_housing) public reposiroty on GitHub, and the content is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
+
 ### Install
 
 This project requires **Python** and the following Python libraries installed:
@@ -42,9 +44,11 @@ This will open the Jupyter Notebook software and project file in your browser.
 The modified Boston housing dataset consists of 489 data points, with each datapoint having 3 features. This dataset is a modified version of the Boston Housing dataset found on the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/machine-learning-databases/housing/).
 
 **Features**
+
 1.  `RM`: average number of rooms per dwelling
 2. `LSTAT`: percentage of population considered lower status
 3. `PTRATIO`: pupil-teacher ratio by town
 
 **Target Variable**
+
 4. `MEDV`: median value of owner-occupied homes
